@@ -5,8 +5,8 @@ import matplotlib.pyplot as plot
 
 
 # ------------------------ CONFIG --------------------------
-volume_file = './180-Grad/1_K.csv'
-pressure_file = './180-Grad/2_K.csv'
+volume_file = './Daten/180-Grad/1_K.csv'
+pressure_file = './Daten/180-Grad/2_K.csv'
 horiz_cutoff_right = 5
 horiz_offset = 5
 ambient_pressure = 1.013
