@@ -1,0 +1,73 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+\usepackage{fancyhdr}
+
+\usepackage[backend=biber,style=apa,sorting=ynt]{biblatex}
+\addbibresource{W2.bib}
+
+\usepackage[margin=0.7in]{geometry}
+
+
+\usepackage{derivative}
+
+
+% Title Page -----------------------------------------------------------
+\title{Protocol \\ W2}
+\author{Jonas Adamer \and Florian Fitsch \and Leonhard Ritt}
+\date{Date of experiment: 2024/10/14\\Date of submission:}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\thepage}
+\fancyfoot[L]{W2 Stirlingmotor}
+\fancyfoot[R]{Adamer, Fitsch, Ritt}
+
+\begin{document}
+
+% TITLE PAGE
+\clearpage
+\maketitle
+\thispagestyle{empty}
+
+% TABLE OF CONTENTS
+\newpage
+\tableofcontents
+\thispagestyle{empty}
+
+
+\newpage
+\section{Objective}
+In this exercise, a Stirling engine is studied in order to determine some of its thermodynamic properties. Firstly, the engine is run manually as a heat pump, in order to assess the reversibility of the Stirling cycle through temperature measurements at the warm and cold sinks. Secondly, the engine is run by supplying heat through combustion of Ethanol as a fuel. Through measurements of temperature, pressure and volume, a \(p/V\) diagram is created and different efficiency values of the process are calculated.
+
+
+\section{Theory}
+The first law of thermodynamics states, that the change of the internal energy of a system can be expressed as a sum of the heat which is added to or removed from the it, as well as the mechanical work, which is done by or put into it.
+
+\begin{equation}
+    \odif U = \fdif Q + \fdif W = \fdif Q - p \odif V
+\end{equation}
+
+The Stirling heat engine is made up of four steps, alternating between isothermal and isochoric. During the isothermal steps of the process, the internal energy \(U\) of the System does not change, meaning \(\fdif -Q = W = -p \odif V\). By integrating all terms and using the ideal gas law \(pV = nRT\), to substitute \(p\), the work which is carried out during an isothermal process can be calculated:
+
+\begin{equation}
+    -Q = W = nRT \cdot ln \frac{V_2}{V_1}
+\end{equation}
+
+During the isochoric steps, \(\odif V\) is equal to zero, meaning no work is carried out. As such the change of internal energy is equal to the heat which is added to or removed from the system.
+
+\begin{equation}
+    \adif U = Q
+\end{equation}
+
+Since there is no change in Volume and thus no work during the isochoric steps, the total work which is carried out by the system during the Stirling cycle can be calculated by adding the work of both isothermal steps.
+
+\begin{equation}
+    W_{pV} = - nRT_1 \cdot \ln{\frac{V_2}{V_1}} - nRT_2 \cdot \ln{\frac{V_1}{V_2}} = nR(T2-T1) \cdot \ln{\frac{V_2}{V_1}}
+\end{equation}
+
+\printbibliography
+
+\end{document}
