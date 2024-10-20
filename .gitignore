@@ -17,3 +17,5 @@ Daten - Copy/
 *.synctex.gz
 *.toc
 *.bib
+*.out
+*.*-SAVE-ERROR

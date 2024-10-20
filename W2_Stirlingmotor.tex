@@ -1,34 +1,45 @@
-\documentclass{article}
+\documentclass[titlepage]{article}
+\usepackage{fancyhdr}
+\usepackage[margin=1.2in]{geometry}
 
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
-
-\usepackage{fancyhdr}
+\usepackage{csquotes}
 
 \usepackage[backend=biber,style=apa,sorting=ynt]{biblatex}
 \addbibresource{W2.bib}
 
-\usepackage[margin=0.7in]{geometry}
-
+\usepackage[breaklinks]{hyperref}
 
 \usepackage{derivative}
 
 
+\usepackage{array,tabularx,calc}
+\newlength{\conditionwd}
+\newenvironment{conditions}[1][where:]
+  {%
+   #1\tabularx{\linewidth-\widthof{#1}}[t]{
+     >{$}l<{$} @{${}={}$} X@{}
+   }%
+  }
+  {\endtabularx\\[\belowdisplayskip]}
+
+
 % Title Page -----------------------------------------------------------
-\title{Protocol \\ W2}
-\author{Jonas Adamer \and Florian Fitsch \and Leonhard Ritt}
+\title{Protocol \\ W2 - Stirling Engine}
+\author{Group F\\Jonas Adamer (12225913)\\Florian Fitsch (12218283)\\Leonhard Ritt (12208881)}
 \date{Date of experiment: 2024/10/14\\Date of submission:}
 
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[R]{\thepage}
 \fancyfoot[L]{W2 Stirlingmotor}
+\fancyfoot[C]{Group F}
 \fancyfoot[R]{Adamer, Fitsch, Ritt}
 
 \begin{document}
 
 % TITLE PAGE
-\clearpage
 \maketitle
 \thispagestyle{empty}
 
@@ -44,30 +55,142 @@ In this exercise, a Stirling engine is studied in order to determine some of its
 
 
 \section{Theory}
-The first law of thermodynamics states, that the change of the internal energy of a system can be expressed as a sum of the heat which is added to or removed from the it, as well as the mechanical work, which is done by or put into it.
+A Stirling engine is a thermodynamic cycle, in which a working fluid (in the case of this experiment air) undergoes four steps:
+%
+\begin{enumerate}
+    \item An isothermal (no change in temperature) expansion of the air. Heat is taken up by the system from a hot reservoir, while work is given off to a flywheel.
+    \item An isochoric (no change in volume) cooling of the air. No work is done by or put into the system.
+    \item An isothermal contraction of the air. Heat is given off to a cold reservoir, and work is put into the system by the flywheel.
+    \item An isochoric heating of the air. No work is done by or put into the system.
+\end{enumerate}
 
+\subsection{Total Work in a Stirling Cycle}
+The first law of thermodynamics states, that the change of the internal energy of a system can be expressed as a sum of the heat which is added to or removed from the it, as well as the mechanical work, which is done by or put into it.
+%
 \begin{equation}
     \odif U = \fdif Q + \fdif W = \fdif Q - p \odif V
 \end{equation}
-
-The Stirling heat engine is made up of four steps, alternating between isothermal and isochoric. During the isothermal steps of the process, the internal energy \(U\) of the System does not change, meaning \(\fdif -Q = W = -p \odif V\). By integrating all terms and using the ideal gas law \(pV = nRT\), to substitute \(p\), the work which is carried out during an isothermal process can be calculated:
-
-\begin{equation}
-    -Q = W = nRT \cdot ln \frac{V_2}{V_1}
+\begin{conditions}
+    U & Internal energy of the system [kJ] \\
+    Q & Heat added to or removed from the system [kJ] \\
+    W & Heat added to or done by the system [kJ] \\
+    p & Pressure of the system [Pa] \\
+    V & Volume of the system [Pa]
+\end{conditions}
+%
+The Stirling heat engine is made up of four steps, alternating between isothermal and isochoric. During the isothermal steps of the process, the internal energy \(U\) of the System does not change, meaning \(\fdif -Q = W = -p \odif V\). By integrating all terms and using the ideal gas law \(pV = nRT\), to substitute \(p\), the work which is carried out during an isothermal state change can be calculated:
+%
+\begin{equation} \label{eq_isothermal_work}
+    -Q = W = -nRT \cdot ln \frac{V_2}{V_1}
 \end{equation}
-
+\begin{conditions}
+    n & Amount of substance [mol] \\
+    R & Ideal gas constant = 8.3145 [J mol\textsuperscript{-1} K\textsuperscript{-1}] \\
+    T & Temperature of the system [K] \\
+    V_2 & Volume at the end of isothermal state change [m\textsuperscript{3}] \\
+    V_1 & Volume at the start of isothermal state change [m\textsuperscript{3}]
+\end{conditions}
+%
 During the isochoric steps, \(\odif V\) is equal to zero, meaning no work is carried out. As such the change of internal energy is equal to the heat which is added to or removed from the system.
-
+%
 \begin{equation}
     \adif U = Q
 \end{equation}
-
+%
 Since there is no change in Volume and thus no work during the isochoric steps, the total work which is carried out by the system during the Stirling cycle can be calculated by adding the work of both isothermal steps.
-
+%
 \begin{equation}
     W_{pV} = - nRT_1 \cdot \ln{\frac{V_2}{V_1}} - nRT_2 \cdot \ln{\frac{V_1}{V_2}} = nR(T2-T1) \cdot \ln{\frac{V_2}{V_1}}
 \end{equation}
+%
+This work is equal to the enclosed area within the p/V diagram of the cycle.
 
-\printbibliography
+\subsection{Efficiency of the Stirling Cycle}
+It is known that the idealized Stirling cycle has a thermal efficiency equal to that of the idealized Carnot cycle.
+%
+\begin{equation}
+    \eta = \frac{W_{pV}}{Q_1} = \frac{T_1 - T_2}{T_1}
+\end{equation}
+%
+In a real-world Stirling engine however, this efficiency is not reached, due to the overlap of the cycle's four steps with each other, along with other losses, such as friction or during heat transfer. As such, other efficiency values are used to assess the quality of the real-world engine.
+
+The first value of interest is the efficiency of heat transfer between the heat source (in this case a small lamp, fuelled by Ethanol) and the hot reservoir of the Stirling engine.
+%
+\begin{equation}
+    \eta_H = \frac{Q_1}{Q_H}
+\end{equation}
+\begin{conditions}
+    \eta_H & Efficiency of heat transfer between heat source and hot reservoir \\
+    Q_1 & Heat received at the hot reservoir [kJ] \\
+    Q_H & Heat given off by the heat source [kJ]
+\end{conditions}
+%
+Secondly, the mechanical efficiency, which relates the amount of usable work received at the flywheel to the work which is carried out by the system.
+%
+\begin{equation}
+    \eta_m = \frac{W_m}{W_{pV}}
+\end{equation}
+\begin{conditions}
+    \eta_m & Mechanical efficiency of the engine \\
+    W_m & Usable work received at the flywheel [kJ] \\
+    W_{pV} & Work given off by the engine [kJ]
+\end{conditions}
+%
+Thirdly, the total efficiency, which relates the amount of usable work received at the flywheel to the heat which is given off by the heat source.
+%
+\begin{equation}
+    \eta = \frac{W_m}{Q_H}
+\end{equation}
+\begin{conditions}
+    \eta & Total efficiency
+\end{conditions}
+%
+The values used in these calculations can be determined as follows:
+%
+\begin{enumerate}
+    \item \(Q_1\) is determined from Equation \ref{eq_isothermal_work} by applying the ideal gas law \(pV = nRT\):
+    \begin{equation}
+        Q_1 = p_1V_1 \cdot ln(\frac{V_2}{V_1})
+    \end{equation}
+    \begin{conditions}
+        p_1 & Pressure at the start of isothermal expansion [Pa] \\
+        V_1 & Volume at the start of isothermal expansion [m\textsuperscript{3}] \\
+        V_2 & Volume at the end of isothermal expansion [m\textsuperscript{3}]
+    \end{conditions}
+
+    \item \(Q_H\) is determined by multiplying the molar heat of combustion of the used fuel with the amount of fuel used, which in turn is calculated by dividing the combustion rate of the burner with the molar mass of the fuel.
+    \begin{equation}
+        Q_H = \Delta_c H_m \cdot m_{EtOH} \cdot \frac{1}{M_{EtOH}}
+    \end{equation}
+    \begin{conditions}
+        \Delta_c H_m & Molar heat of combustion of burned fuel [kJ/mol] \\
+        m_{EtOH} & Mass of burned fuel [g] \\
+        M_{EtOH} & Molar mass of burned fuel [g/mol]
+    \end{conditions}
+
+    \item \(W_m\) is determined by calculating the work required to spin the flywheel up to its regular frequency from a standstill.
+    \begin{equation}
+        W_m = 4 \pi^2 m r^2 (\frac{f_f - f_0}{\adif t})
+    \end{equation}
+    \begin{conditions}
+        m & Mass of flywheel [kg] \\
+        r & Radius of flywheel [m] \\
+        f_f & Frequency of the engine after several cycles [Hz] \\
+        f_0 & Frequency of the engine during the first cycle [Hz] \\
+        \adif t & Time between the start of the cycle used to determine \(f_0\) and end of the cycle used to determine \(f_f\) [s]
+    \end{conditions}
+    
+    \item \(W_{pV}\) is determined by calculating the area enclosed in the p/V diagram.
+\end{enumerate}
+
+\section{Experiment and Results}
+
+\subsection{Reversibility of the Stirling cycle}
+
+
+\subsection{Efficiency Values of the Stirling Engine}
+
+
+% \printbibliography
 
 \end{document}
