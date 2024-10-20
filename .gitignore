@@ -12,7 +12,6 @@ Daten - Copy/
 *.fdb_latexmk
 *.fls
 *.log
-*.pdf
 *.run.xml
 *.synctex.gz
 *.toc

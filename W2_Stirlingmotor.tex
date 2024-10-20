@@ -16,12 +16,9 @@
 
 \usepackage{array,tabularx,calc}
 \newlength{\conditionwd}
-\newenvironment{conditions}[1][where:]
-  {%
-   #1\tabularx{\linewidth-\widthof{#1}}[t]{
-     >{$}l<{$} @{${}={}$} X@{}
-   }%
-  }
+\newenvironment{conditions}[1][where:]{
+        #1\tabularx{\linewidth-\widthof{#1}}[t]
+        {>{$}l<{$} @{${}={}$} X@{}}}
   {\endtabularx\\[\belowdisplayskip]}
 
 
@@ -78,7 +75,7 @@ The first law of thermodynamics states, that the change of the internal energy o
     V & Volume of the system [Pa]
 \end{conditions}
 %
-The Stirling heat engine is made up of four steps, alternating between isothermal and isochoric. During the isothermal steps of the process, the internal energy \(U\) of the System does not change, meaning \(\fdif -Q = W = -p \odif V\). By integrating all terms and using the ideal gas law \(pV = nRT\), to substitute \(p\), the work which is carried out during an isothermal state change can be calculated:
+The Stirling cycle is made up of four steps, alternating between isothermal and isochoric. During the isothermal steps of the process, the internal energy \(U\) of the System does not change, meaning \(\fdif -Q = W = -p \odif V\). By integrating all terms and using the ideal gas law \(pV = nRT\), to substitute \(p\), the work which is carried out during an isothermal state change can be calculated:
 %
 \begin{equation} \label{eq_isothermal_work}
     -Q = W = -nRT \cdot ln \frac{V_2}{V_1}
@@ -183,10 +180,48 @@ The values used in these calculations can be determined as follows:
     \item \(W_{pV}\) is determined by calculating the area enclosed in the p/V diagram.
 \end{enumerate}
 
+
+\newpage
 \section{Experiment and Results}
 
-\subsection{Reversibility of the Stirling cycle}
+\subsection{Reversibility of the Stirling Engine}
+In order to assess the reversibility of the engine, a crank was attached to the flywheel, allowing for manual input of work into the system. The upper part of the engine (cold reservoir) was covered with 100 g of water, while the bottom part (hot reservoir) was left exposed to air.
+The crank was then spun by hand, first clockwise (the direction in which it would run during operation as a regular heat engine), then counterclockwise, for one minute each. Special attention was paid towards trying to keep a constant angular velocity while cranking the flywheel, both during individual runs as well as from one run to another.
+The temperatures on both sides of the engine were recorded before and after the runs, and are shown in Table \ref{tb_manual_temps}.
 
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    & \multicolumn{2}{|c|}{\textbf{Clockwise}} & \multicolumn{2}{|c|}{\textbf{Counter-Clockwise}}
+    \\
+    \hline
+    & \textbf{Top} & \textbf{Bottom} & \textbf{Top} & \textbf{Bottom}
+    \\
+    \hline
+    \textbf{Start} & 25.2 & 28 & 25.2 & 28
+    \\
+    \hline
+    \textbf{End} & 25.2 & 27 & 25.0 & 29
+    \\
+    \hline
+\end{tabular}
+\caption{Recorded temperatures (in °C) before and after spinning the flywheel}
+\label{tb_manual_temps}
+\end{table}
+%
+\noindent These results show that, in it's usual configuration as a heat engine, heat is transferred from the bottom of the engine, where normally a heat source would be located, to the top of it. When run in reverse, the opposite phenomenon is observed, and heat is moved from the top of the engine to the bottom.
+
+The change in heat on each side of the engine can be calculated using the specific heat capacities of the adjacent fluids, the mass of the fluid and the difference in temperature.
+\begin{equation}
+    Q = m \cdot c \cdot \adif T
+\end{equation}
+\begin{conditions}
+    Q & Heat added to or removed to the system [J] \\
+    m & Mass of the adjacent fluid [g] \\
+    \adif T & Change in temperature [°C]
+\end{conditions}
+However, since the bottom side of the engine is exposed to the surrounding atmosphere, the corresponding mass is very large, and as such the  change in temperature on the bottom end of the engine would be expected to be negligible. The temperature change which is observed however, is due to the heat being taken up or given off by the metal body of the engine itself.
 
 \subsection{Efficiency Values of the Stirling Engine}
 
