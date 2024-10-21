@@ -156,7 +156,7 @@ The values used in these calculations can be determined as follows:
     \end{conditions}
 
     \item \(Q_H\) is determined by multiplying the molar heat of combustion of the used fuel with the amount of fuel used, which in turn is calculated by dividing the combustion rate of the burner with the molar mass of the fuel.
-    \begin{equation}
+    \begin{equation} \label{eq_combustion_heat}
         Q_H = \Delta_c H_m \cdot m_{EtOH} \cdot \frac{1}{M_{EtOH}}
     \end{equation}
     \begin{conditions}
@@ -221,9 +221,82 @@ The change in heat on each side of the engine can be calculated using the specif
     m & Mass of the adjacent fluid [g] \\
     \adif T & Change in temperature [°C]
 \end{conditions}
-However, since the bottom side of the engine is exposed to the surrounding atmosphere, the corresponding mass is very large, and as such the  change in temperature on the bottom end of the engine would be expected to be negligible. The temperature change which is observed however, is due to the heat being taken up or given off by the metal body of the engine itself.
+However, since the bottom side of the engine is exposed to the surrounding atmosphere, the corresponding mass is very large, and as such the change in temperature on the bottom end of the engine would be expected to be negligible. The temperature change which is observed however, is due to the heat being taken up or given off by the metal body of the engine itself.
 
 \subsection{Efficiency Values of the Stirling Engine}
+In order to calculate the efficiency values of the engine, the crank was removed from the flywheel and replaced by a gear, which was connected to a pV-sensor via belt drive. The pV-sensor as well as the temperature-probes were in turn connected to a pVnT-measuring device. Temperature values at specific times in the experiment were obtained directly from the displays of this device, while pressure and volume data was measured over a continuous timespan using an oscilloscope connected to it. The engine frequency was determined at specific points of the experiment as the reciprocal value of the time of a single cycle, which was determined from the pressure and volume data.
+
+In order to calculate \(Q_H\) as shown in Equation \ref{eq_combustion_heat}, the fuel consumption rate of the used lantern was determined by letting the flame burn for a specific duration and weighing the lantern before and afterwards.
+\begin{equation}
+    x = \frac{\adif m}{\adif t}
+\end{equation}
+\begin{conditions}
+    k & Fuel consumption rate of the lantern [g/s] \\
+    \adif m & Difference in mass of the lantern [g] \\
+    \adif t & Time the lantern was lit for [s]
+\end{conditions}
+Table \ref{tb_consumption_rate} shows the recorded mass differences and durations as well as the resulting fuel consumption rates, their average and standard deviation.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \(\adif m\) [g] & \(\adif t\) [s] & k [g/s]
+        \\
+        \hline
+        0.78 & 60 & 0.013
+        \\
+        \hline
+        0.7 & 60 & 0.012
+        \\
+        \hline
+        0.7 & 60 & 0.013
+        \\
+        \hline
+        0.76 & 60 & 0.013
+        \\
+        \hline
+        \hline
+        & \(\overline{x}\) & 0.012
+        \\
+        \hline
+        & \(s\) & 0.0006
+        \\
+        \hline
+        & \(S\) & 0.0009
+        \\
+        \hline
+    \end{tabular}
+    \caption{Starting temperatures and durations of the experiment runs as well as frequencies of the first and fourth cycle and at constant frequency}
+    \label{tb_consumption_rate}
+\end{table}
+
+In the four runs of the experiment which were conducted - each at a different temperature - the lantern was put underneath the engine and ignited. Once the engine reached the desired temperature, the flywheel was put in motion by hand and the starting temperature was recorded. After the first few cycles, the recording of the oscilloscope was stopped and the data exported onto a USB-drive. Another recording was made and exported once the engine reached its full operating frequency and another temperature measurement was taken before the torch was extinguished and the engine came to a halt.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c||c|c|c|c|}
+        \hline
+        \(T_{start}\) [°C] & \textbf{190} & \textbf{210} & \textbf{230} & \textbf{250}
+        \\
+        \hline
+        Duration [s] & 82 & 256 & 65 & 141
+        \\
+        \hline
+        \(f_0\) [Hz] & x & x & x & x
+        \\
+        \hline
+        \(f_f\) [Hz] & x & x & x & x
+        \\
+        \hline
+        \(f_{const}\) [Hz] & x & x & x & x
+        \\
+        \hline
+    \end{tabular}
+    \caption{Starting temperatures and durations of the experiment runs as well as frequencies of the first and fourth cycle and at constant frequency}
+    \label{tb_efficiency_runs}
+\end{table}
+
 
 
 % \printbibliography

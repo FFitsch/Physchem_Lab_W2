@@ -3,6 +3,7 @@ __pycache__/
 Daten/
 Daten - Copy/
 *.csv
+*.xlsx
 
 #LaTeX stuff
 *.aux
