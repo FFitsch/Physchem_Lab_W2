@@ -8,15 +8,14 @@ from functions import group
 
 
 # ------------------------ CONFIG --------------------------
-volume_file = './Daten/180-Grad/1_K.csv'
-pressure_file = './Daten/180-Grad/2_K.csv'
 horiz_cutoff_left = -5
-horiz_cutoff_right = -2
+horiz_cutoff_right = -3
 horiz_offset = 5
 ambient_pressure = 1.013
 extreme_val_width = 0.05
 pv_calculations = True
 
+volume_file = './Daten/180-Grad/1_K.csv'
 v_vert_scale = 1
 v_vert_pos = -1.360
 v_horiz_pos = 0
@@ -24,7 +23,7 @@ v_horiz_scale = 1
 v_col_time = 0
 v_col_volt = 1
 
-
+pressure_file = './Daten/180-Grad/2_K.csv'
 p_vert_scale = 0.2
 p_vert_pos = -1.904
 p_horiz_pos = 0
@@ -55,16 +54,16 @@ p_data.loc[:, 'p_value'] *= p_vert_scale
 
 
 # horizontal scale corrections
-v_data.loc[:, 'v_value'] += v_horiz_pos + horiz_offset
-v_data.loc[:, 'v_value'] *= v_horiz_scale
+v_data.loc[:, 'time'] += (v_horiz_pos + horiz_offset)
+v_data.loc[:, 'time'] *= v_horiz_scale
 
-p_data.loc[:, 'p_value'] += p_horiz_pos + horiz_offset
-p_data.loc[:, 'p_value'] *= p_horiz_scale
+p_data.loc[:, 'time'] += (p_horiz_pos + horiz_offset)
+p_data.loc[:, 'time'] *= p_horiz_scale
 
 
 # convert voltage into volume/pressure
 v_data.loc[:, 'v_value'] = (v_data.v_value + 41)/56
-p_data.loc[:, 'p_value'] = ((p_data.p_value - 1.05)/3.1) + ambient_pressure
+p_data.loc[:, 'p_value'] = ((p_data.p_value + 1.05)/3.1) + ambient_pressure
 
 
 #find local extreme values
@@ -92,38 +91,36 @@ p_data_max = p_data_max[p_data_max['time'].isin(p_max_list)]
 
 # configure plot
 if(pv_calculations):
-    figure, axes = plot.subplots(1, 2)
-    v_axis = axes[0]
-    pv_axes = axes[1]
+    figure, axes = plot.subplots()
+    pv_axes = axes
 else:
     figure, axes = plot.subplots()
     v_axis = axes
 
-p_axis = v_axis.twinx()
+if(not pv_calculations):
+    p_axis = v_axis.twinx()
 
-v_color = 'red'
-v_axis.set_xlabel('Time (s)')
-v_axis.set_ylabel('Volume (L)')
-v_axis.tick_params(axis='y', labelcolor = v_color)
-v_axis.plot(v_data['time'], v_data['v_value'], label = 'volume', color = v_color)
+    v_color = 'red'
+    v_axis.set_xlabel('Time (s)')
+    v_axis.set_ylabel('Volume (L)')
+    v_axis.tick_params(axis='y', labelcolor = v_color)
+    v_axis.plot(v_data['time'], v_data['v_value'], label = 'volume', color = v_color)
 
 
-p_color = 'blue'
-p_axis.set_ylabel('Pressure (bar)')
-p_axis.tick_params(axis='y', labelcolor = p_color)
-p_axis.plot(p_data['time'], p_data['p_value'], label = 'pressure', color = p_color)
+    p_color = 'blue'
+    p_axis.set_ylabel('Pressure (bar)')
+    p_axis.tick_params(axis='y', labelcolor = p_color)
+    p_axis.plot(p_data['time'], p_data['p_value'], label = 'pressure', color = p_color)
 
-v_axis.xaxis.grid(True, which='both')
-v_axis.xaxis.set_major_locator(matplotlib.ticker.MultipleLocator(1))
-v_axis.xaxis.set_minor_locator(matplotlib.ticker.MultipleLocator(0.2))
+    v_axis.xaxis.grid(True, which='both')
+    v_axis.xaxis.set_major_locator(matplotlib.ticker.MultipleLocator(1))
+    v_axis.xaxis.set_minor_locator(matplotlib.ticker.MultipleLocator(0.2))
 
-figure.legend(loc='upper left')
+    figure.legend(loc='upper left')
 
-#add maxima
-v_axis.scatter(v_data_max['time'], v_data_max['max'], c='red')
-p_axis.scatter(p_data_max['time'], p_data_max['max'], c='blue')
-
-plot.tight_layout()
+    #add maxima
+    v_axis.scatter(v_data_max['time'], v_data_max['max'], c='red')
+    p_axis.scatter(p_data_max['time'], p_data_max['max'], c='blue')
 
 # add p/v graph if program is run with constant cycle data
 if(pv_calculations):
@@ -131,8 +128,10 @@ if(pv_calculations):
     pv_data = pd.merge(v_data, p_data, on='time')
 
     # only use one rotation worth of p/v data
-    #pv_data = pv_data[pv_data['time'] < v_data_max[v_data_max['v_value'] == sorted(set(v_max_list))[-2]]['time'].iloc[0]]
-    #pv_data = pv_data[pv_data['time'] > v_data_max[v_data_max['v_value'] == sorted(set(v_max_list))[-3]]['time'].iloc[0]]
+    pv_data = pv_data[pv_data['time'] > sorted(set(p_max_list))[1]]
+    pv_data = pv_data[pv_data['time'] < sorted(set(p_max_list))[2]]
+
+    pv_data[['p_value', 'v_value']].iloc[::10, :].to_csv('pv_values.csv', index = False)
 
     pv_axes.plot(pv_data['v_value'], pv_data['p_value'])
     pv_axes.set_xlabel('Volume (L)')
@@ -142,6 +141,7 @@ if(pv_calculations):
 
 # render plot
 #plot.savefig('test.png')
+plot.tight_layout()
 plot.show()
     
 
