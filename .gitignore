@@ -2,6 +2,7 @@
 __pycache__/
 Daten/
 Daten - Copy/
+Figures/
 *.csv
 *.xlsx
 *.png

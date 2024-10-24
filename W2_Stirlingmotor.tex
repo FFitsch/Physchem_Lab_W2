@@ -11,8 +11,10 @@
 
 \usepackage[breaklinks]{hyperref}
 
-\usepackage{derivative}
+\usepackage{graphicx}
+\usepackage{float}
 
+\usepackage{derivative}
 
 \usepackage{array,tabularx,calc}
 \newlength{\conditionwd}
@@ -72,7 +74,7 @@ The first law of thermodynamics states, that the change of the internal energy o
     Q & Heat added to or removed from the system [kJ] \\
     W & Heat added to or done by the system [kJ] \\
     p & Pressure of the system [Pa] \\
-    V & Volume of the system [Pa]
+    V & Volume of the system [m\^3]
 \end{conditions}
 %
 The Stirling cycle is made up of four steps, alternating between isothermal and isochoric. During the isothermal steps of the process, the internal energy \(U\) of the System does not change, meaning \(\fdif -Q = W = -p \odif V\). By integrating all terms and using the ideal gas law \(pV = nRT\), to substitute \(p\), the work which is carried out during an isothermal state change can be calculated:
@@ -139,14 +141,14 @@ Thirdly, the total efficiency, which relates the amount of usable work received 
     \eta = \frac{W_m}{Q_H}
 \end{equation}
 \begin{conditions}
-    \eta & Total efficiency
+    \eta & Total efficiency of the process
 \end{conditions}
 %
 The values used in these calculations can be determined as follows:
 %
 \begin{enumerate}
     \item \(Q_1\) is determined from Equation \ref{eq_isothermal_work} by applying the ideal gas law \(pV = nRT\):
-    \begin{equation}
+    \begin{equation} \label{eq_Q1}
         Q_1 = p_1V_1 \cdot ln(\frac{V_2}{V_1})
     \end{equation}
     \begin{conditions}
@@ -155,26 +157,28 @@ The values used in these calculations can be determined as follows:
         V_2 & Volume at the end of isothermal expansion [m\textsuperscript{3}]
     \end{conditions}
 
-    \item \(Q_H\) is determined by multiplying the molar heat of combustion of the used fuel with the amount of fuel used, which in turn is calculated by dividing the combustion rate of the burner with the molar mass of the fuel.
-    \begin{equation} \label{eq_combustion_heat}
-        Q_H = \Delta_c H_m \cdot m_{EtOH} \cdot \frac{1}{M_{EtOH}}
+    \item \(Q_H\) is determined by multiplying the molar heat of combustion of the fuel with the amount of fuel used, which in turn is calculated by dividing the amount of fuel used with the molar mass of the fuel. The amount of fuel used can be determined by multiplying the fuel consumption rate of the used lantern with the relevant time period.
+    \begin{equation} \label{eq_QH}
+        Q_H = \Delta_c H_m \cdot \frac{m_{EtOH}}{M_{EtOH}} = Q_H = \Delta_c H_m \cdot \frac{k \cdot \adif t}{M_{EtOH}}
     \end{equation}
     \begin{conditions}
         \Delta_c H_m & Molar heat of combustion of burned fuel [kJ/mol] \\
         m_{EtOH} & Mass of burned fuel [g] \\
-        M_{EtOH} & Molar mass of burned fuel [g/mol]
+        M_{EtOH} & Molar mass of burned fuel [g/mol] \\
+        k & Fuel consumption rate of the lantern [g/s] \\
+        \adif t & Time period [s]
     \end{conditions}
 
     \item \(W_m\) is determined by calculating the work required to spin the flywheel up to its regular frequency from a standstill.
-    \begin{equation}
-        W_m = 4 \pi^2 m r^2 (\frac{f_f - f_0}{\adif t})
+    \begin{equation} \label{eq_Wm}
+        W_m = 4 \pi^2 m r^2 (\frac{f_f - f_0}{\adif t_{start}})
     \end{equation}
     \begin{conditions}
         m & Mass of flywheel [kg] \\
         r & Radius of flywheel [m] \\
         f_f & Frequency of the engine after several cycles [Hz] \\
         f_0 & Frequency of the engine during the first cycle [Hz] \\
-        \adif t & Time between the start of the cycle used to determine \(f_0\) and end of the cycle used to determine \(f_f\) [s]
+        \adif t_{start} & Time between the start of the cycle used to determine \(f_0\) and end of the cycle used to determine \(f_f\) [s]
     \end{conditions}
     
     \item \(W_{pV}\) is determined by calculating the area enclosed in the p/V diagram.
@@ -189,7 +193,7 @@ In order to assess the reversibility of the engine, a crank was attached to the 
 The crank was then spun by hand, first clockwise (the direction in which it would run during operation as a regular heat engine), then counterclockwise, for one minute each. Special attention was paid towards trying to keep a constant angular velocity while cranking the flywheel, both during individual runs as well as from one run to another.
 The temperatures on both sides of the engine were recorded before and after the runs, and are shown in Table \ref{tb_manual_temps}.
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 \begin{tabular}{|c|c|c|c|c|}
     \hline
@@ -213,31 +217,35 @@ The temperatures on both sides of the engine were recorded before and after the 
 \noindent These results show that, in it's usual configuration as a heat engine, heat is transferred from the bottom of the engine, where normally a heat source would be located, to the top of it. When run in reverse, the opposite phenomenon is observed, and heat is moved from the top of the engine to the bottom.
 
 The change in heat on each side of the engine can be calculated using the specific heat capacities of the adjacent fluids, the mass of the fluid and the difference in temperature.
+%
 \begin{equation}
     Q = m \cdot c \cdot \adif T
 \end{equation}
 \begin{conditions}
-    Q & Heat added to or removed to the system [J] \\
+    Q & Heat added to or removed to the system [kJ] \\
     m & Mass of the adjacent fluid [g] \\
     \adif T & Change in temperature [°C]
 \end{conditions}
+%
 However, since the bottom side of the engine is exposed to the surrounding atmosphere, the corresponding mass is very large, and as such the change in temperature on the bottom end of the engine would be expected to be negligible. The temperature change which is observed however, is due to the heat being taken up or given off by the metal body of the engine itself.
 
 \subsection{Efficiency Values of the Stirling Engine}
 In order to calculate the efficiency values of the engine, the crank was removed from the flywheel and replaced by a gear, which was connected to a pV-sensor via belt drive. The pV-sensor as well as the temperature-probes were in turn connected to a pVnT-measuring device. Temperature values at specific times in the experiment were obtained directly from the displays of this device, while pressure and volume data was measured over a continuous timespan using an oscilloscope connected to it. The engine frequency was determined at specific points of the experiment as the reciprocal value of the time of a single cycle, which was determined from the pressure and volume data.
 
-In order to calculate \(Q_H\) as shown in Equation \ref{eq_combustion_heat}, the fuel consumption rate of the used lantern was determined by letting the flame burn for a specific duration and weighing the lantern before and afterwards.
+In order to calculate \(Q_H\) as shown in Equation \ref{eq_QH}, the fuel consumption rate of the used lantern was determined by letting the flame burn for a specific duration and weighing the lantern before and afterwards.
+%
 \begin{equation}
-    x = \frac{\adif m}{\adif t}
+    k = \frac{\adif m}{\adif t}
 \end{equation}
 \begin{conditions}
     k & Fuel consumption rate of the lantern [g/s] \\
     \adif m & Difference in mass of the lantern [g] \\
     \adif t & Time the lantern was lit for [s]
 \end{conditions}
+%
 Table \ref{tb_consumption_rate} shows the recorded mass differences and durations as well as the resulting fuel consumption rates, their average and standard deviation.
 
-\begin{table}[h]
+\begin{table}[H]
     \centering
     \begin{tabular}{|c|c|c|}
         \hline
@@ -267,37 +275,86 @@ Table \ref{tb_consumption_rate} shows the recorded mass differences and duration
         \\
         \hline
     \end{tabular}
-    \caption{Starting temperatures and durations of the experiment runs as well as frequencies of the first and fourth cycle and at constant frequency}
+    \caption{Measured mass differences and burn times of the lantern and resulting fuel consumption ratios as well as their average, standard deviation and error margin}
     \label{tb_consumption_rate}
 \end{table}
 
-In the four runs of the experiment which were conducted - each at a different temperature - the lantern was put underneath the engine and ignited. Once the engine reached the desired temperature, the flywheel was put in motion by hand and the starting temperature was recorded. After the first few cycles, the recording of the oscilloscope was stopped and the data exported onto a USB-drive. Another recording was made and exported once the engine reached its full operating frequency and another temperature measurement was taken before the torch was extinguished and the engine came to a halt.
+\noindent In the four runs of the experiment which were conducted - each at a different temperature - the lantern was put underneath the engine and ignited. Once the engine reached the desired temperature, the flywheel was put in motion by hand and the starting temperature was recorded. After the first few cycles, the recording of the oscilloscope was stopped and the data exported onto a USB-drive. Another recording was made and exported once the engine reached its full operating frequency and another temperature measurement was taken before the torch was extinguished and the engine came to a halt.
 
-\begin{table}[h]
+In order to convert the electric currents measured by the oscilloscope into pressures and volumes, the following pre-determined conversions were used:
+%
+\begin{equation}
+    V = \frac{U + 41}{56}
+\end{equation}
+\begin{conditions}
+    V & Volume [L] \\
+    U & Measured current [V]
+\end{conditions}
+%
+\begin{equation}
+    p = \frac{U + 1.05}{3.1} + p_0
+\end{equation}
+\begin{conditions}
+    p & Pressure [bar] \\
+    U & Measured current [V] \\
+    p_0 & Ambient pressure [bar]
+\end{conditions}
+%
+In Figure \ref{fig_start_pvt} the volume and pressure of the working fluid at different temperatures are shown plotted against time, while in Figure \ref{fig_constant_pvt_pv}, the same plots are shown at constant motion of the engine, in addition to the corresponding p/V-diagrams.
+
+\begin{figure}[H]
+    \label{fig_start_pvt}
+    \centering
+    \includegraphics[width=\textwidth]{Figures/pvt\_start.png}
+    \caption{Volume (shown in red) and pressure (shown in blue) of the working fluid, plotted against time, at the start of each experiment. The start and end of the first and fourth cycle, which are used to determine \(f_0\) and \(f_f\), were selected to coincide with the local maxima of the pressure graph, and are marked with black dots.}
+\end{figure}
+
+\begin{figure}[H]
+    \label{fig_constant_pvt_pv}
+    \centering
+    \includegraphics[width=\textwidth]{Figures/pvt\_pv\_constant.png}
+    \caption{Volumes (shown in red) and pressures (shown in blue) of the working fluid, plotted against time, at constant motion of the engine, are shown on the left for each temperature. The start and end of the first cycle is marked with black dots. The period in between these is used to plot the pressure against temperature, which is shown on the right.}
+\end{figure}
+
+Table \ref{tb_efficiency_runs} shows relevant data for the calculation of the Stirling engine's efficiency values. Values for \(Q_1\) are calculated using Equation \ref{eq_Q1}. Values for \(Q_H\) are calculated using Equation \ref{eq_QH}, using a molar heat of combustion \(\Delta_c H_m\)(EtOH) of 1360 kJ/mol. Values for \(W_m\) are calculated using Equation \ref{eq_Wm}, using a mass of 4.7~kg and a radius of 0.17~m for the flywheel.
+
+\begin{table}[H]
     \centering
     \begin{tabular}{|c||c|c|c|c|}
         \hline
         \(T_{start}\) [°C] & \textbf{190} & \textbf{210} & \textbf{230} & \textbf{250}
         \\
         \hline
-        Duration [s] & 82 & 256 & 65 & 141
+        \hline
+        \(f_0\) [Hz] & 0.93 & x & x & x
         \\
         \hline
-        \(f_0\) [Hz] & x & x & x & x
+        \(f_f\) [Hz] & 1.48 & x & x & x
         \\
         \hline
-        \(f_f\) [Hz] & x & x & x & x
+        \({\adif t}_{start}\) [s] & 3.33 & x & x & x
         \\
         \hline
-        \(f_{const}\) [Hz] & x & x & x & x
+        \(f_{const}\) [Hz] & 3.41 & x & x & x
+        \\
+        \hline
+        \hline
+        \(Q_1\) [kJ] & x & x & x & x
+        \\
+        \hline
+        \(Q_H\) [kJ] & x & x & x & x
+        \\
+        \hline
+        \(W_m\) [kJ] & x & x & x & x
+        \\
+        \hline
+        \(W_{pV}\) [kJ] & x & x & x & x
         \\
         \hline
     \end{tabular}
-    \caption{Starting temperatures and durations of the experiment runs as well as frequencies of the first and fourth cycle and at constant frequency}
+    \caption{}
     \label{tb_efficiency_runs}
 \end{table}
-
-
 
 % \printbibliography
 
