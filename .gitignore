@@ -4,6 +4,7 @@ Daten/
 Daten - Copy/
 *.csv
 *.xlsx
+*.png
 
 #LaTeX stuff
 *.aux

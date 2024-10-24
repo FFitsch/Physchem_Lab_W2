@@ -8,14 +8,19 @@ from functions import group
 
 
 # ------------------------ CONFIG --------------------------
-horiz_cutoff_left = -5
-horiz_cutoff_right = -3
-horiz_offset = 5
+horiz_cutoff_left = -4.5
+horiz_cutoff_right = 1
+horiz_offset = 4.5
 ambient_pressure = 1.013
 extreme_val_width = 0.05
-pv_calculations = True
+pv_1st_maxima = 1
+marked_maxima_positions = [0,1,3,4] # for start
+#marked_maxima_positions = [1,2] # for constant
+run_pv_calculations = False
+run_temp = '190'
+run_start = True
 
-volume_file = './Daten/180-Grad/1_K.csv'
+volume_file = './Daten/180-Grad/1_S.csv'
 v_vert_scale = 1
 v_vert_pos = -1.360
 v_horiz_pos = 0
@@ -23,7 +28,7 @@ v_horiz_scale = 1
 v_col_time = 0
 v_col_volt = 1
 
-pressure_file = './Daten/180-Grad/2_K.csv'
+pressure_file = './Daten/180-Grad/2_S.csv'
 p_vert_scale = 0.2
 p_vert_pos = -1.904
 p_horiz_pos = 0
@@ -40,9 +45,9 @@ p_data_raw = pd.read_csv(pressure_file, skiprows=28, usecols=[p_col_time,p_col_v
 
 # set which portions of the data are shown
 v_data = v_data_raw[v_data_raw['time'] >= horiz_cutoff_left]
-v_data = v_data_raw[v_data_raw['time'] <= horiz_cutoff_right]
+v_data = v_data[v_data['time'] <= horiz_cutoff_right]
 p_data = p_data_raw[p_data_raw['time'] >= horiz_cutoff_left]
-p_data = p_data_raw[p_data_raw['time'] <= horiz_cutoff_right]
+p_data = p_data[p_data['time'] <= horiz_cutoff_right]
 
 
 # vertical scale corrections
@@ -66,12 +71,12 @@ v_data.loc[:, 'v_value'] = (v_data.v_value + 41)/56
 p_data.loc[:, 'p_value'] = ((p_data.p_value + 1.05)/3.1) + ambient_pressure
 
 
-#find local extreme values
+# find local extreme values
 v_data.loc[:, 'max'] = v_data.iloc[argrelextrema(v_data.v_value.values, np.greater_equal, order = 100)[0]]['v_value']
 p_data.loc[:, 'max'] = p_data.iloc[argrelextrema(p_data.p_value.values, np.greater_equal, order = 100)[0]]['p_value']
 
 
-#only use one extreme value per group/peak
+# only use one extreme value per group/peak
 v_data_max = v_data.dropna(subset='max')
 v_data_max_groups = group(v_data_max['time'], extreme_val_width)
 v_max_list = []
@@ -89,89 +94,87 @@ for g in p_data_max_groups:
 p_data_max = p_data_max[p_data_max['time'].isin(p_max_list)]
 
 
-# configure plot
-if(pv_calculations):
-    figure, axes = plot.subplots()
-    pv_axes = axes
-else:
-    figure, axes = plot.subplots()
-    v_axis = axes
+# only use maxima with sufficient height
+v_max_offset = v_data['v_value'].min() + ((v_data['v_value'].max() - v_data['v_value'].min()) * 0.75)
+v_data_max = v_data_max[v_data_max['max'] >= v_max_offset]
+v_max_list = sorted(set(v_data_max['time'].tolist()))
 
-if(not pv_calculations):
+p_max_offset = p_data['p_value'].min() + ((p_data['p_value'].max() - p_data['p_value'].min()) * 0.75)
+p_data_max = p_data_max[p_data_max['max'] >= p_max_offset]
+p_max_list = sorted(set(p_data_max['time'].tolist()))
+
+# configure plot
+figure, axes = plot.subplots()
+
+if(not run_pv_calculations):
+    v_axis = axes
     p_axis = v_axis.twinx()
 
     v_color = 'red'
     v_axis.set_xlabel('Time (s)')
-    v_axis.set_ylabel('Volume (L)')
+    v_axis.set_ylabel('Volume (L)', color = 'red')
     v_axis.tick_params(axis='y', labelcolor = v_color)
     v_axis.plot(v_data['time'], v_data['v_value'], label = 'volume', color = v_color)
 
 
     p_color = 'blue'
-    p_axis.set_ylabel('Pressure (bar)')
+    p_axis.set_ylabel('Pressure (bar)', color = 'blue')
     p_axis.tick_params(axis='y', labelcolor = p_color)
     p_axis.plot(p_data['time'], p_data['p_value'], label = 'pressure', color = p_color)
 
-    v_axis.xaxis.grid(True, which='both')
+    # v_axis.xaxis.grid(True, which='both')
     v_axis.xaxis.set_major_locator(matplotlib.ticker.MultipleLocator(1))
     v_axis.xaxis.set_minor_locator(matplotlib.ticker.MultipleLocator(0.2))
 
-    figure.legend(loc='upper left')
+    # figure.legend(loc='upper left')
+
+    # only show certain maxima
+    p_data_max = p_data_max[p_data_max['time'].isin([p_max_list[x] for x in marked_maxima_positions])]
+
+    if(run_start):
+        p_data_max.to_csv(run_temp + '_pt_start.csv')
+    else:
+        p_data_max.to_csv(run_temp + '_pt_constant.csv')
+
 
     #add maxima
-    v_axis.scatter(v_data_max['time'], v_data_max['max'], c='red')
-    p_axis.scatter(p_data_max['time'], p_data_max['max'], c='blue')
+    #v_axis.scatter(v_data_max['time'], v_data_max['max'], c='red')
+    p_axis.scatter(p_data_max['time'], p_data_max['max'], c='black', zorder=5)
 
 # add p/v graph if program is run with constant cycle data
-if(pv_calculations):
+if(run_pv_calculations):
+    pv_axes = axes
+
     #merge data
     pv_data = pd.merge(v_data, p_data, on='time')
 
     # only use one rotation worth of p/v data
-    pv_data = pv_data[pv_data['time'] > sorted(set(p_max_list))[1]]
-    pv_data = pv_data[pv_data['time'] < sorted(set(p_max_list))[2]]
+    pv_data = pv_data[pv_data['time'] > p_max_list[pv_1st_maxima]]
+    pv_data = pv_data[pv_data['time'] < p_max_list[pv_1st_maxima + 1]]
 
-    pv_data[['p_value', 'v_value']].iloc[::10, :].to_csv('pv_values.csv', index = False)
+    pv_data[['p_value', 'v_value']].iloc[::10, :].to_csv(run_temp + '_pv_values.csv', index = False)
 
     pv_axes.plot(pv_data['v_value'], pv_data['p_value'])
     pv_axes.set_xlabel('Volume (L)')
     pv_axes.set_ylabel('Pressure (bar)')
-    pv_axes.legend(loc='upper right')
 
 
 # render plot
-#plot.savefig('test.png')
+figure.set_figheight(4)
+if(run_start):
+    figure.set_figwidth(8)
+else:
+    figure.set_figwidth(5)
+figure.set_dpi(200)
+
+plot.title('190 °C')
 plot.tight_layout()
+
+if(run_pv_calculations):
+    plot.savefig(run_temp + '_pv_constant.png')
+elif(run_start):
+    plot.savefig(run_temp + '_pvt_start.png')
+else:
+    plot.savefig(run_temp + '_pvt_constant.png')
+
 plot.show()
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# center y values around 0
-#v_start.volt -= (v_start.volt.max()/2 + v_start.volt.min()/2)
-#p_start.volt -= (p_start.volt.max()/2 + p_start.volt.min()/2)
-
-# normalize y axis
-#v_start.volt /= v_start.volt.abs().max()
-#p_start.volt /= p_start.volt.abs().max()
-
-#plot.plot(v_start['second'], v_start['volt'], label = 'volume', color = 'orange')
-#plot.plot(p_start['second'], p_start['volt'], label = 'pressure', color = 'blue')
-#plot.legend(loc='upper left')
-#plot.show()
