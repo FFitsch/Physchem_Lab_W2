@@ -8,19 +8,19 @@ from functions import group
 
 
 # ------------------------ CONFIG --------------------------
-horiz_cutoff_left = -4.5
-horiz_cutoff_right = 1
-horiz_offset = 4.5
+horiz_cutoff_left = -5
+horiz_cutoff_right = -4
+horiz_offset = 5
 ambient_pressure = 1.013
 extreme_val_width = 0.05
 pv_1st_maxima = 1
-marked_maxima_positions = [0,1,3,4] # for start
-#marked_maxima_positions = [1,2] # for constant
+#marked_maxima_positions = [0,1,3,4] # for start
+marked_maxima_positions = [1,2] # for constant
 run_pv_calculations = False
 run_temp = '190'
-run_start = True
+run_start = False
 
-volume_file = './Daten/180-Grad/1_S.csv'
+volume_file = './Daten/180-Grad/1_K.csv'
 v_vert_scale = 1
 v_vert_pos = -1.360
 v_horiz_pos = 0
@@ -28,7 +28,7 @@ v_horiz_scale = 1
 v_col_time = 0
 v_col_volt = 1
 
-pressure_file = './Daten/180-Grad/2_S.csv'
+pressure_file = './Daten/180-Grad/2_K.csv'
 p_vert_scale = 0.2
 p_vert_pos = -1.904
 p_horiz_pos = 0
@@ -131,15 +131,31 @@ if(not run_pv_calculations):
     # only show certain maxima
     p_data_max = p_data_max[p_data_max['time'].isin([p_max_list[x] for x in marked_maxima_positions])]
 
+    # very ugly but need a maximum and minimum volume value for Q_1
+    v_data_extr_range = v_data[p_data['time'] > p_max_list[marked_maxima_positions[0]]]
+    v_data_extr_range = v_data_extr_range[v_data_extr_range['time'] < p_max_list[marked_maxima_positions[1]]]
+
+    v_data_extr_mins = v_data_extr_range[v_data_extr_range['v_value'] == v_data_extr_range.v_value.min()]
+    v_data_extr_min_value = v_data_extr_mins.iloc[len(v_data_extr_mins.index)//2]
+
+    v_data_extr_maxs = v_data_extr_range[v_data_extr_range['v_value'] == v_data_extr_range.v_value.max()]
+    v_data_extr_max_value = v_data_extr_maxs.iloc[len(v_data_extr_maxs.index)//2]
+
+    v_data_extr = pd.DataFrame.from_dict([{'time': v_data_extr_min_value['time'], 'v_value': v_data_extr_min_value['v_value']}, {'time': v_data_extr_max_value['time'], 'v_value': v_data_extr_max_value['v_value']}])
+
+    #add maxima
+    #v_axis.scatter(v_data_max['time'], v_data_max['max'], c='red')
+    p_axis.scatter(p_data_max['time'], p_data_max['p_value'], c='black', zorder=5)
+    # v_axis.scatter(v_data_extr['time'], v_data_extr['v_value'], c='black', zorder=6)
+
+    p_data_max = p_data_max._append({'time': v_data_extr_min_value['time'], 'p_value': p_data[p_data['time'] == v_data_extr_min_value['time']].iloc[0]['p_value']}, ignore_index = True)
+
     if(run_start):
         p_data_max.to_csv(run_temp + '_pt_start.csv')
     else:
         p_data_max.to_csv(run_temp + '_pt_constant.csv')
+        v_data_extr.to_csv(run_temp + '_vt_constant.csv')
 
-
-    #add maxima
-    #v_axis.scatter(v_data_max['time'], v_data_max['max'], c='red')
-    p_axis.scatter(p_data_max['time'], p_data_max['max'], c='black', zorder=5)
 
 # add p/v graph if program is run with constant cycle data
 if(run_pv_calculations):

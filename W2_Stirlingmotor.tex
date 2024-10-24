@@ -70,9 +70,9 @@ The first law of thermodynamics states, that the change of the internal energy o
     \odif U = \fdif Q + \fdif W = \fdif Q - p \odif V
 \end{equation}
 \begin{conditions}
-    U & Internal energy of the system [kJ] \\
-    Q & Heat added to or removed from the system [kJ] \\
-    W & Heat added to or done by the system [kJ] \\
+    U & Internal energy of the system [J] \\
+    Q & Heat added to or removed from the system [J] \\
+    W & Heat added to or done by the system [J] \\
     p & Pressure of the system [Pa] \\
     V & Volume of the system [m\^3]
 \end{conditions}
@@ -115,29 +115,29 @@ In a real-world Stirling engine however, this efficiency is not reached, due to 
 
 The first value of interest is the efficiency of heat transfer between the heat source (in this case a small lamp, fuelled by Ethanol) and the hot reservoir of the Stirling engine.
 %
-\begin{equation}
+\begin{equation} \label{eq_eta_H}
     \eta_H = \frac{Q_1}{Q_H}
 \end{equation}
 \begin{conditions}
     \eta_H & Efficiency of heat transfer between heat source and hot reservoir \\
-    Q_1 & Heat received at the hot reservoir [kJ] \\
-    Q_H & Heat given off by the heat source [kJ]
+    Q_1 & Heat received at the hot reservoir [J] \\
+    Q_H & Heat given off by the heat source [J]
 \end{conditions}
 %
 Secondly, the mechanical efficiency, which relates the amount of usable work received at the flywheel to the work which is carried out by the system.
 %
-\begin{equation}
+\begin{equation} \label{eq_eta_m}
     \eta_m = \frac{W_m}{W_{pV}}
 \end{equation}
 \begin{conditions}
     \eta_m & Mechanical efficiency of the engine \\
-    W_m & Usable work received at the flywheel [kJ] \\
-    W_{pV} & Work given off by the engine [kJ]
+    W_m & Usable work received at the flywheel [J] \\
+    W_{pV} & Work given off by the engine [J]
 \end{conditions}
 %
 Thirdly, the total efficiency, which relates the amount of usable work received at the flywheel to the heat which is given off by the heat source.
 %
-\begin{equation}
+\begin{equation}  \label{eq_eta}
     \eta = \frac{W_m}{Q_H}
 \end{equation}
 \begin{conditions}
@@ -194,24 +194,24 @@ The crank was then spun by hand, first clockwise (the direction in which it woul
 The temperatures on both sides of the engine were recorded before and after the runs, and are shown in Table \ref{tb_manual_temps}.
 
 \begin{table}[H]
-\centering
-\begin{tabular}{|c|c|c|c|c|}
-    \hline
-    & \multicolumn{2}{|c|}{\textbf{Clockwise}} & \multicolumn{2}{|c|}{\textbf{Counter-Clockwise}}
-    \\
-    \hline
-    & \textbf{Top} & \textbf{Bottom} & \textbf{Top} & \textbf{Bottom}
-    \\
-    \hline
-    \textbf{Start} & 25.2 & 28 & 25.2 & 28
-    \\
-    \hline
-    \textbf{End} & 25.2 & 27 & 25.0 & 29
-    \\
-    \hline
-\end{tabular}
-\caption{Recorded temperatures (in °C) before and after spinning the flywheel}
-\label{tb_manual_temps}
+    \centering
+    \caption{Recorded temperatures (in °C) before and after spinning the flywheel}
+    \label{tb_manual_temps}
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        & \multicolumn{2}{|c|}{\textbf{Clockwise}} & \multicolumn{2}{|c|}{\textbf{Counter-Clockwise}}
+        \\
+        \hline
+        & \textbf{Top} & \textbf{Bottom} & \textbf{Top} & \textbf{Bottom}
+        \\
+        \hline
+        \textbf{Start} & 25.2 & 28 & 25.2 & 28
+        \\
+        \hline
+        \textbf{End} & 25.2 & 27 & 25.0 & 29
+        \\
+        \hline
+    \end{tabular}
 \end{table}
 %
 \noindent These results show that, in it's usual configuration as a heat engine, heat is transferred from the bottom of the engine, where normally a heat source would be located, to the top of it. When run in reverse, the opposite phenomenon is observed, and heat is moved from the top of the engine to the bottom.
@@ -222,7 +222,7 @@ The change in heat on each side of the engine can be calculated using the specif
     Q = m \cdot c \cdot \adif T
 \end{equation}
 \begin{conditions}
-    Q & Heat added to or removed to the system [kJ] \\
+    Q & Heat added to or removed to the system [J] \\
     m & Mass of the adjacent fluid [g] \\
     \adif T & Change in temperature [°C]
 \end{conditions}
@@ -247,6 +247,8 @@ Table \ref{tb_consumption_rate} shows the recorded mass differences and duration
 
 \begin{table}[H]
     \centering
+    \caption{Measured mass differences and burn times of the lantern and resulting fuel consumption ratios as well as their average, standard deviation and error margin}
+    \label{tb_consumption_rate}
     \begin{tabular}{|c|c|c|}
         \hline
         \(\adif m\) [g] & \(\adif t\) [s] & k [g/s]
@@ -275,8 +277,6 @@ Table \ref{tb_consumption_rate} shows the recorded mass differences and duration
         \\
         \hline
     \end{tabular}
-    \caption{Measured mass differences and burn times of the lantern and resulting fuel consumption ratios as well as their average, standard deviation and error margin}
-    \label{tb_consumption_rate}
 \end{table}
 
 \noindent In the four runs of the experiment which were conducted - each at a different temperature - the lantern was put underneath the engine and ignited. Once the engine reached the desired temperature, the flywheel was put in motion by hand and the starting temperature was recorded. After the first few cycles, the recording of the oscilloscope was stopped and the data exported onto a USB-drive. Another recording was made and exported once the engine reached its full operating frequency and another temperature measurement was taken before the torch was extinguished and the engine came to a halt.
@@ -313,14 +313,28 @@ In Figure \ref{fig_start_pvt} the volume and pressure of the working fluid at di
     \label{fig_constant_pvt_pv}
     \centering
     \includegraphics[width=\textwidth]{Figures/pvt\_pv\_constant.png}
-    \caption{Volumes (shown in red) and pressures (shown in blue) of the working fluid, plotted against time, at constant motion of the engine, are shown on the left for each temperature. The start and end of the first cycle is marked with black dots. The period in between these is used to plot the pressure against temperature, which is shown on the right.}
+    \caption{Volumes (shown in red) and pressures (shown in blue) of the working fluid, plotted against time, at constant motion of the engine, are shown on the left for each temperature. The start and end of the first cycle is marked with black dots. The period in between these is used to plot the pressure against temperature, which is shown on the right. In addition, the minimum and maximum pressures during the cycle are similarly marked and used for later calculations.}
 \end{figure}
 
-Table \ref{tb_efficiency_runs} shows relevant data for the calculation of the Stirling engine's efficiency values. Values for \(Q_1\) are calculated using Equation \ref{eq_Q1}. Values for \(Q_H\) are calculated using Equation \ref{eq_QH}, using a molar heat of combustion \(\Delta_c H_m\)(EtOH) of 1360 kJ/mol. Values for \(W_m\) are calculated using Equation \ref{eq_Wm}, using a mass of 4.7~kg and a radius of 0.17~m for the flywheel.
+\noindent Table \ref{tb_efficiency_runs} shows relevant data for the calculation of the Stirling engine's efficiency values. Values for \(Q_1\) are calculated using Equation \ref{eq_Q1}, with \(V_1\) and \(V_2\) taken as the maximum and minimum volumes during the marked cycle in Figure \ref{fig_constant_pvt_pv} - since \(Q_1\) is calculated during isothermic expansion, the higher volume is used as \(V_2\). \(p_1\) is thus taken as the pressure at the time at which \(V_1\) is found. Values for \(Q_H\) are calculated using Equation \ref{eq_QH}, using a molar heat of combustion \(\Delta_c H_m\)(EtOH) of 1360 kJ/mol. Values for \(W_m\) are calculated using Equation \ref{eq_Wm}, using a mass of 4.7~kg and a radius of 0.17~m for the flywheel.
 
+Since \(Q_H\), unlike the other calculated values, is not determined for a single cycle, it needs to be normalized to the cycle duration as follows:
+%
+\begin{equation}
+    Q_{H,corrected} = Q_{H,calculated} \cdot \frac{\adif t}{{\adif t}_{start}}
+\end{equation}
+\begin{conditions}
+    Q_{H,corrected} & \(Q_H\) for once cycle [J] \\
+    Q_{H,calculated} & \(Q_H\) as calculated using Equation \ref{eq_Q1} [J] \\
+    \adif t & Duration of one cycle [s] \\
+    {\adif t}_{start} & Time difference between start of first and end of fourth cycle, as used in Equation \ref{eq_Q1} [s]
+\end{conditions}
+%
 \begin{table}[H]
     \centering
-    \begin{tabular}{|c||c|c|c|c|}
+    \caption{}
+    \label{tb_efficiency_runs}
+    \begin{tabular}{|r||c|c|c|c|}
         \hline
         \(T_{start}\) [°C] & \textbf{190} & \textbf{210} & \textbf{230} & \textbf{250}
         \\
@@ -338,23 +352,60 @@ Table \ref{tb_efficiency_runs} shows relevant data for the calculation of the St
         \(f_{const}\) [Hz] & 3.41 & x & x & x
         \\
         \hline
-        \hline
-        \(Q_1\) [kJ] & x & x & x & x
+        \({\adif t}\) [s] & 0.29 & x & x & x
         \\
         \hline
-        \(Q_H\) [kJ] & x & x & x & x
+        \(V_1\) [L] & 0.71 & x & x & x
         \\
         \hline
-        \(W_m\) [kJ] & x & x & x & x
+        \(V_2\) [L] & 0.79 & x & x & x
         \\
         \hline
-        \(W_{pV}\) [kJ] & x & x & x & x
+        \(p_1\) [bar] & 1.37 & x & x & x
+        \\
+        \hline
+        \hline
+        \(Q_1\) [J] & 11.48 & x & x & x
+        \\
+        \hline
+        \(Q_H\) [J] & 105.96 & x & x & x
+        \\
+        \hline
+        \(W_m\) [J] & 0.0391 & x & x & x
+        \\
+        \hline
+        \(W_{pV}\) [J] & 0.0506 & x & x & x
         \\
         \hline
     \end{tabular}
-    \caption{}
-    \label{tb_efficiency_runs}
 \end{table}
+
+Using Equations \ref{eq_eta_H}, \ref{eq_eta_m} and \ref{eq_eta}, the resulting efficiency values can then be caluclated:
+
+\begin{table}[H]
+    \centering
+    \caption{}
+    \label{tb_efficiency_values}
+    \begin{tabular}{|r||c|c|c|c|}
+        \hline
+        \(T_{start}\) [°C] & \textbf{190} & \textbf{210} & \textbf{230} & \textbf{250}
+        \\
+        \hline
+        \hline
+        \(\eta_H\) & 0.11 & x & x & x
+        \\
+        \hline
+        \(\eta_m\) & 0.77 & x & x & x
+        \\
+        \hline
+        \(\eta\) & 0.00037 & x & x & x
+        \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\newpage
+\section{Discussion of Results and Uncertainty of Measurements}
 
 % \printbibliography
 
