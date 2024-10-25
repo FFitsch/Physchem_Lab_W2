@@ -30,7 +30,7 @@ v_col_volt = 1
 
 pressure_file = './Daten/180-Grad/2_K.csv'
 p_vert_scale = 0.2
-p_vert_pos = -1.904
+p_vert_pos = -2.528
 p_horiz_pos = 0
 p_horiz_scale = 1
 p_col_time = 0
@@ -183,7 +183,7 @@ else:
     figure.set_figwidth(5)
 figure.set_dpi(200)
 
-plot.title('190 °C')
+plot.title(run_temp + ' °C')
 plot.tight_layout()
 
 if(run_pv_calculations):
