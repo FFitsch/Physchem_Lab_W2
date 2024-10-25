@@ -45,7 +45,7 @@
 % TABLE OF CONTENTS
 \newpage
 \tableofcontents
-\thispagestyle{empty}
+\thispagestyle{fancy}
 
 
 \newpage
@@ -287,7 +287,7 @@ The experiment was conducted several times the recorded mass differences and dur
     \end{tabular}
 \end{table}
 
-\noindent In the four runs of the main experiment - each at a different temperature - the lamp was put underneath the engine and ignited. Once the engine reached the desired temperature, the flywheel was put in motion by hand and the starting temperature was recorded. After the first few cycles, the recording of the oscilloscope was stopped and the data exported onto a USB-drive. Another recording was made and exported once the engine reached its full operating frequency and another temperature measurement was taken before the torch was extinguished and the engine came to a halt.
+\noindent In the three\footnote{An additional fourth run was conducted at a temperature of 210 °C, for which data seems to have been incorrectly exported from the oscilloscope and which can thus not be evaluated.} runs of the main experiment - each at a different temperature - the lamp was put underneath the engine and ignited. Once the engine reached the desired temperature, the flywheel was put in motion by hand and the starting temperature was recorded. After the first few cycles, the recording of the oscilloscope was stopped and the data exported onto a USB-drive. Another recording was made and exported once the engine reached its full operating frequency and another temperature measurement was taken before the torch was extinguished and the engine came to a halt.
 
 In order to convert the voltages measured by the oscilloscope into pressures and volumes, the following pre-determined conversions were used:
 %
@@ -312,7 +312,7 @@ In Figure \ref{fig_start_pvt} the volume and pressure of the working fluid at di
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{Figures/pvt\_start.png}
+    \includegraphics[width=0.7\textwidth]{Figures/pvt\_start.png}
     \caption{Volume (shown in red) and pressure (shown in blue) of the working fluid, plotted against time, at the start of each experiment. The start and end of the first and fourth cycle, which are used to determine \(f_0\) and \(f_f\), were selected to coincide with the local maxima of the pressure graph, and are marked with black dots.}
     \label{fig_start_pvt}
 \end{figure}
@@ -344,45 +344,45 @@ Since \(Q_H\), unlike the other calculated values, is not determined for a singl
     \label{tb_efficiency_runs}
     \begin{tabular}{|r||c|c|c|c|}
         \hline
-        \(T_{start}\) [°C] & \textbf{190} & \textbf{210} & \textbf{230} & \textbf{250}
+        \(T_{start}\) [°C] & \textbf{190} & \textbf{230} & \textbf{250}
         \\
         \hline
         \hline
-        \(f_0\) [Hz] & 0.93 & x & x & x
+        \(f_0\) [Hz] & 0.93 & 1.10 & 1.23
         \\
         \hline
-        \(f_f\) [Hz] & 1.48 & x & x & x
+        \(f_f\) [Hz] & 1.48 & 1.79 & 1.95
         \\
         \hline
-        \({\adif t}_{start}\) [s] & 3.33 & x & x & x
+        \({\adif t}_{start}\) [s] & 3.33 & 2.81 & 2.53
         \\
         \hline
-        \(f_{const}\) [Hz] & 3.41 & x & x & x
+        \(f_{const}\) [Hz] & 3.41 & 4.35 & 3.36
         \\
         \hline
-        \({\adif t}\) [s] & 0.29 & x & x & x
+        \({\adif t}\) [s] & 0.29 & 0.23 & 0.30
         \\
         \hline
-        \(V_1\) [L] & 0.71 & x & x & x
+        \(V_1\) [L] & 0.71 & 0.703 & 0.703
         \\
         \hline
-        \(V_2\) [L] & 0.79 & x & x & x
+        \(V_2\) [L] & 0.79 & 0.793 & 0.793
         \\
         \hline
-        \(p_1\) [bar] & 1.37 & x & x & x
+        \(p_1\) [bar] & 1.37 & 1.37 & 1.35
         \\
         \hline
         \hline
-        \(Q_1\) [J] & 11.48 & x & x & x
+        \(Q_1\) [J] & 11.48 & 11.62 & 11.45
         \\
         \hline
-        \(Q_H\) [J] & 105.96 & x & x & x
+        \(Q_H\) [J] & 105.96 & 83.18 & 107.77
         \\
         \hline
-        \(W_m\) [J] & 0.0391 & x & x & x
+        \(W_m\) [J] & 0.0391 & 0.0533 & 0.0831
         \\
         \hline
-        \(W_{pV}\) [J] & 0.0506 & x & x & x
+        \(W_{pV}\) [J] & 0.0506 & 0.1833 & 0.3247
         \\
         \hline
     \end{tabular}
@@ -396,17 +396,17 @@ Using Equations \ref{eq_eta_H}, \ref{eq_eta_m} and \ref{eq_eta}, the resulting e
     \label{tb_efficiency_values}
     \begin{tabular}{|r||c|c|c|c|}
         \hline
-        \(T_{start}\) [°C] & \textbf{190} & \textbf{210} & \textbf{230} & \textbf{250}
+        \(T_{start}\) [°C] & \textbf{190} & \textbf{230} & \textbf{250}
         \\
         \hline
         \hline
-        \(\eta_H\) & 0.11 & x & x & x
+        \(\eta_H\) & 0.11 & 0.14 & 0.11
         \\
         \hline
-        \(\eta_m\) & 0.77 & x & x & x
+        \(\eta_m\) & 0.77 & 0.29 & 0.27
         \\
         \hline
-        \(\eta\) & 0.00037 & x & x & x
+        \(\eta\) & 0.00037 & 0.00064 & 0.00083
         \\
         \hline
     \end{tabular}
