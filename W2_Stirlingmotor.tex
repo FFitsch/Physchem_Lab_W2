@@ -292,18 +292,18 @@ The experiment was conducted several times the recorded mass differences and dur
 In order to convert the voltages measured by the oscilloscope into pressures and volumes, the following pre-determined conversions were used:
 %
 \begin{equation}
-    V = \frac{U + 41}{56}
+    V = \frac{U + 41}{56} \cdot 10^{-3}
 \end{equation}
 \begin{conditions}
-    V & Volume [L] \\
+    V & Volume [m\textsuperscript{3}] \\
     U & Measured current [V]
 \end{conditions}
 %
 \begin{equation}
-    p = \frac{U + 1.05}{3.1} + p_0
+    p = (\frac{U + 1.05}{3.1} + p_0) \cdot 10^5
 \end{equation}
 \begin{conditions}
-    p & Pressure [bar] \\
+    p & Pressure [Pa] \\
     U & Measured current [V] \\
     p_0 & Ambient pressure [bar]
 \end{conditions}
@@ -363,13 +363,13 @@ Since \(Q_H\), unlike the other calculated values, is not determined for a singl
         \({\adif t}\) [s] & 0.29 & 0.23 & 0.30
         \\
         \hline
-        \(V_1\) [L] & 0.71 & 0.703 & 0.703
+        \(V_1\) [m\textsuperscript{3}] & \(7.08 \cdot 10^{-4}\) & \(7.03 \cdot 10^{-4}\) & \(7.03 \cdot 10^{-4}\)
         \\
         \hline
-        \(V_2\) [L] & 0.79 & 0.793 & 0.793
+        \(V_2\) [m\textsuperscript{3}] & \(7.97 \cdot 10^{-4}\) & \(7.93 \cdot 10^{-4}\) & \(7.93 \cdot 10^{-4}\)
         \\
         \hline
-        \(p_1\) [bar] & 1.37 & 1.37 & 1.35
+        \(p_1\) [Pa] & \(1.37 \cdot 10^5\) & \(1.37 \cdot 10^5\) & \(1.35 \cdot 10^5\)
         \\
         \hline
         \hline
