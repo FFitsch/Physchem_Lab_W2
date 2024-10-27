@@ -13,7 +13,7 @@
 
 \usepackage{graphicx}
 \usepackage{float}
-\usepackage[tableposition=top]{caption}
+\usepackage[tableposition=top, justification=centering]{caption}
 
 \usepackage{derivative}
 
@@ -281,7 +281,7 @@ In order to calculate \(Q_H\) as shown in Equation~\ref{eq_QH}, the fuel consump
     \adif t & Time the lamp was lit for [s]
 \end{conditions}
 %
-The experiment was conducted several times the recorded mass differences and durations as well as the resulting fuel consumption rates, their average, standard deviation and uncertainty are shown in Table~\ref{tb_consumption_rate}.
+The experiment was conducted several times and the recorded mass differences and durations as well as the resulting fuel consumption rates and their average are shown in Table~\ref{tb_consumption_rate}.
 
 \begin{table}[H]
     \centering
@@ -295,10 +295,10 @@ The experiment was conducted several times the recorded mass differences and dur
         0.78 & 60 & 0.013
         \\
         \hline
-        0.7 & 60 & 0.012
+        0.70 & 60 & 0.012
         \\
         \hline
-        0.7 & 60 & 0.013
+        0.70 & 60 & 0.012
         \\
         \hline
         0.76 & 60 & 0.013
@@ -308,16 +308,11 @@ The experiment was conducted several times the recorded mass differences and dur
         & \(\overline{x}\) & 0.012
         \\
         \hline
-        & \(s\) & 0.0006
-        \\
-        \hline
-        & \(S\) & 0.0009
-        \\
-        \hline
     \end{tabular}
 \end{table}
 
-\noindent In the three\footnote{An additional fourth run was conducted at a temperature of 210 °C, for which data seems to have been incorrectly exported from the oscilloscope and which can thus not be evaluated.} runs of the main experiment - each at a different temperature - the lamp was put underneath the engine and ignited. Once the engine reached the desired temperature, the flywheel was put in motion by hand and the starting temperature was recorded. After the first few cycles, the recording of the oscilloscope was stopped and the data exported onto a USB-drive. Another recording was made and exported once the engine reached its full operating frequency and another temperature measurement was taken before the torch was extinguished and the engine came to a halt.
+\noindent In the three\footnote{An additional fourth run was conducted at a temperature of 210 °C, for which data seems to have been incorrectly exported from the oscilloscope and which can thus not be evaluated.}
+ runs of the main experiment - each at a different temperature - the lamp was put underneath the engine and ignited. Once the engine reached the desired temperature, the flywheel was put in motion by hand and the starting temperature was recorded. After the first few cycles, the recording of the oscilloscope was stopped and the data exported onto a USB-drive. Another recording was made and exported once the engine reached its full operating frequency and another temperature measurement was taken before the torch was extinguished and the engine came to a halt.
 
 In order to convert the voltages measured by the oscilloscope into pressures and volumes, the following pre-determined conversions were used:
 %
@@ -328,8 +323,8 @@ In order to convert the voltages measured by the oscilloscope into pressures and
     V & Volume [m\textsuperscript{3}] \\
     U & Measured current [V]
 \end{conditions}
-%
-\begin{equation}
+\newpage
+\begin{equation} \label{eq_pressure_from_volt}
     p = (\frac{U + 1.05}{3.1} + p_0) \cdot 10^5
 \end{equation}
 \begin{conditions}
@@ -344,7 +339,7 @@ In Figure~\ref{fig_start_pvt}, the volume and pressure of the working fluid at d
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{Figures/pvt\_start.png}
+    \includegraphics[width=0.64\textwidth]{Figures/pvt\_start.png}
     \caption{Volume (shown in red) and pressure (shown in blue) of the working fluid, plotted against time, at the start of each experiment. The start and end of the first and fourth cycle, which are used to determine \(f_0\) and \(f_f\), were selected to coincide with the local maxima of the pressure graph, and are marked with black dots.}
     \label{fig_start_pvt}
 \end{figure}
@@ -356,6 +351,7 @@ In Figure~\ref{fig_start_pvt}, the volume and pressure of the working fluid at d
     \label{fig_constant_pvt_pv}
 \end{figure}
 
+\newpage
 \noindent Table~\ref{tb_efficiency_runs} shows relevant data for the calculation of the Stirling engine's efficiency values. Values for \(Q_1\) are calculated using Equation~\ref{eq_Q1}, with \(V_1\) and \(V_2\) taken as the maximum and minimum volumes during the marked cycle in Figure~\ref{fig_constant_pvt_pv}. Since \(Q_1\) is calculated during isothermic expansion, the higher volume is used as \(V_2\). \(p_1\) is thus taken as the pressure at the time at which \(V_1\) is found. Values for \(Q_H\) are calculated using Equation~\ref{eq_QH}, using a molar heat of combustion \(\Delta_c H_m\)(EtOH) of 1360 kJ/mol. Values for \(W_m\) are calculated using Equation~\ref{eq_Wm}, using a mass of 4.7~kg and a radius of 0.17~m for the flywheel. \(W_pV\) is calculated as the enclosed area in the p/V diagram, using a supplied excel sheet.
 
 Since \(Q_H\), unlike the other calculated values, is not determined for a single cycle, it needs to be normalized to the cycle duration as follows:
@@ -372,11 +368,14 @@ Since \(Q_H\), unlike the other calculated values, is not determined for a singl
 %
 \begin{table}[H]
     \centering
-    \caption{}
+    \caption{Measured data during experiment runs of the efficiency determination part of the experiment, as well as thermodynamic values calculated from it}
     \label{tb_efficiency_runs}
     \begin{tabular}{|r||c|c|c|c|}
         \hline
-        \(T_{start}\) [°C] & \textbf{190} & \textbf{230} & \textbf{250}
+        \(T_{start,bottom}\) [°C] & \textbf{190} & \textbf{230} & \textbf{250}
+        \\
+        \hline
+        \(T_{start,top}\) [°C] & 31.2 & 34.9 & 36.5
         \\
         \hline
         \hline
@@ -419,12 +418,12 @@ Since \(Q_H\), unlike the other calculated values, is not determined for a singl
         \hline
     \end{tabular}
 \end{table}
-
-Using Equations~\ref{eq_eta_H},~\ref{eq_eta_m}~and~\ref{eq_eta}, the resulting efficiency values can then be caluclated:
+%
+\noindent From the data compiled in Table \ref{tb_efficiency_runs}, using Equations~\ref{eq_eta_H},~\ref{eq_eta_m}~and~\ref{eq_eta}, the resulting efficiency values can then be caluclated:
 
 \begin{table}[H]
     \centering
-    \caption{}
+    \caption{Efficiency values determined from measurement of the Stirling engine}
     \label{tb_efficiency_values}
     \begin{tabular}{|r||c|c|c|c|}
         \hline
@@ -457,12 +456,18 @@ While qualitatively, the experiment shows results that align with expectations, 
     \item While attention was paid towards keeping a constant frequency while spinning the flywheel, as well as running the experiment for precisely one minute, it is still to be expected that the exact values will deviate between the two experiments. While important to keep in mind, these deviations are assumed to be much less significant than the two previously mentioned sources for inaccuracies.
 \end{enumerate}
 
+\newpage
 \subsection{Efficiency of the Stirling Engine}
-The efficiency values of the Stirling engine, which are listed in Table \ref{tb_efficiency_values}, show .......
+Table \ref{tb_efficiency_values}, shows a heat transfer efficiency \(\eta_H\) of about 10-15~\% of the heat which is produced through the combustion of ethanol being used by the engine and converted into work. The mechanical efficiency \(\eta_m\) in turn shows that between 32~\% and 65~\% of the work produced by the working gas is transferred to the flywheel. Finally, the overall efficiency values \(\eta\) show that only between 0.037~\% and 0.083~\% of the produced heat are transferred into usable work.
 
-For this experiment, the following sources of unceratainty were identified:
+While \(\eta_H\) does not show a clear trend with temperature\footnote{In fact, the value at 230~°C is higher than that at the other two values. Since \(\eta_H\) is a measure of how much heat is lost to the surroundings between the flame and the engine body, it is assumed that its value does not or only slightly change with temperature, meaning that the observed variation could have arisen out of other measurement or calculation uncertainties.}
+, \(\eta_m\) and especially \(\eta\) show increased values with a higher starting temperature, which matches with expectations, since the theoretical efficiency \(\eta_{Carnot}\) also increases with a higher temperature of the hot reservoir.
+
+Just like with the prevous experiment, several possible sources of uncertainty were identified for the determined values:
 \begin{enumerate}
-    \item Since the heat source was unable to supply enough heat to keep the engine at a constant temperature, and the measurements for constant engine motion could only be taken after exporting those for the start of an experiment from the oscilloscope to the USB-drive, with time, less heat was available to the engine at its bottom end. Additionally, since the water at its top was only cooled by the surrounding air, less heat could be transferred from the working gas to the cold reservoir, further lowering its efficiency. The main value which this affects is \(W_m\), which, unlike \(Q_1\) and \(W_{pV}\) was calculated from values recorded at the start of the experiment, where more heat than is suggested by \(Q_H\) was available.
+    \item Since the heat source was unable to supply enough heat to keep the engine at a constant temperature, and the measurements for constant engine motion could only be taken after exporting those for the start of an experiment from the oscilloscope to the USB-drive, with time, less heat was available to the engine at its bottom end. Additionally, since the water at its top was only cooled by the surrounding air, it heated up over time, meaning less heat could be transferred from the working gas to the cold reservoir, further lowering the engine's efficiency. As such, values calculated from data recorded at the end of the respective runs will tend towards similar values (this is especially apparent for \(Q_1\) but also for \(W_{pV}\)).
+    \item In order to counteract the previously stated issues, measurements for constant engine motion were taken as soon as possible after exporting the starting values. Thus, the time between start and constant value measurements almost certianly differed between experiments.
+    \item Since there was no barometer available at the time of experiment, the ambient pressure used in Equation \ref{eq_pressure_from_volt} was arbitrarily chosen as 1 bar.
 \end{enumerate}
 
 \end{document}
