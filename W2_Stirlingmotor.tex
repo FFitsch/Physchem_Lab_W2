@@ -28,7 +28,7 @@
 % Title Page -----------------------------------------------------------
 \title{Protocol \\ W2 - Stirling Engine}
 \author{Group F\\Jonas Adamer (12225913)\\Florian Fitsch (12218283)\\Leonhard Ritt (12208881)}
-\date{Date of experiment: 2024/10/14\\Date of submission:}
+\date{Date of experiment: 2024/10/14\\Date of submission:2024/10/28}
 
 \pagestyle{fancy}
 \fancyhf{}
@@ -347,12 +347,12 @@ In Figure~\ref{fig_start_pvt}, the volume and pressure of the working fluid at d
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Figures/pvt\_pv\_constant.png}
-    \caption{Volumes (shown in red) and pressures (shown in blue) of the working fluid, plotted against time, at constant motion of the engine, are shown on the left for each temperature. The start and end of the first cycle is marked with black dots. The period in between these is used to plot the pressure against temperature, which is shown on the right. In addition, the minimum and maximum pressures during the cycle are similarly marked and used for later calculations.}
+    \caption{Volumes (shown in red) and pressures (shown in blue) of the working fluid, plotted against time, at constant motion of the engine, are shown on the left for each temperature. The start and end of the first cycle is marked with black dots. The period in between these is used to plot the pressure against volume, which is shown on the right. In addition, the minimum and maximum pressures during the cycle are similarly marked and used for later calculations.}
     \label{fig_constant_pvt_pv}
 \end{figure}
 
 \newpage
-\noindent Table~\ref{tb_efficiency_runs} shows relevant data for the calculation of the Stirling engine's efficiency values. Values for \(Q_1\) are calculated using Equation~\ref{eq_Q1}, with \(V_1\) and \(V_2\) taken as the maximum and minimum volumes during the marked cycle in Figure~\ref{fig_constant_pvt_pv}. Since \(Q_1\) is calculated during isothermic expansion, the higher volume is used as \(V_2\). \(p_1\) is thus taken as the pressure at the time at which \(V_1\) is found. Values for \(Q_H\) are calculated using Equation~\ref{eq_QH}, using a molar heat of combustion \(\Delta_c H_m\)(EtOH) of 1360 kJ/mol. Values for \(W_m\) are calculated using Equation~\ref{eq_Wm}, using a mass of 4.7~kg and a radius of 0.17~m for the flywheel. \(W_pV\) is calculated as the enclosed area in the p/V diagram, using a supplied excel sheet.
+\noindent Table~\ref{tb_efficiency_runs} shows relevant data for the calculation of the Stirling engine's efficiency values. Values for \(Q_1\) are calculated using Equation~\ref{eq_Q1}, with \(V_1\) and \(V_2\) taken as the maximum and minimum volumes during the marked cycle in Figure~\ref{fig_constant_pvt_pv}. Since \(Q_1\) is calculated during isothermic expansion, the higher volume is used as \(V_2\). \(p_1\) is thus taken as the pressure at the time at which \(V_1\) is found. Values for \(Q_H\) are calculated using Equation~\ref{eq_QH}, using a molar heat of combustion \(\Delta_c H_m\)(EtOH) of 1360 kJ/mol. Values for \(W_m\) are calculated using Equation~\ref{eq_Wm}, using a mass of 4.7~kg and a radius of 0.17~m for the flywheel. \(W_{pV}\) is calculated as the enclosed area in the p/V diagram, using a supplied excel sheet.
 
 Since \(Q_H\), unlike the other calculated values, is not determined for a single cycle, it needs to be normalized to the cycle duration as follows:
 %
@@ -452,13 +452,13 @@ While qualitatively, the experiment shows results that align with expectations, 
 %
 \begin{enumerate}
     \item Due to the low precision of the taken temperature measurements (especially for the bottom of the engine, where the resolution of the thermometer was only 1~°C), only very small changes in temperature during the experiment (with measurements often only changing by a single unit on the respective scale), the temperature differences shown in Table~\ref{tb_manual_heat} could deviate substantially from those which were observed. This issue could be counteracted either by using eqipment which can measure the temperature at greater resolution, or by running the experiment for a longer time and/or at a higher frequency, allowing for a higher change in temperature at both ends of the engine.
-    \item Since the engine is not perfectly insulated, its components as well as the surrounding air will take up or give off heat to or from the engine. Since the water at the top of the piston has a high heat capacity in comparison to air or steel and is present in considerable amounts, it can act as a reservoir, meaning that it will form a thermal equilibrium with its surroundings rather slowly. In comparison however, the air at the bottom of the engine, which is used to calculate the heat added or removed during the experiment, has a lower heat capacity as well as a lower mass than the water, it will much more quickly gain or lose heat. This can be seen in \ref{tb_manual_heat}, where, despite a bigger change in temperature, the calculated heat values are two orders of magnitude lower than those at the top of the engine.
+    \item Since the engine is not perfectly insulated, its components as well as the surrounding air will take up or give off heat to or from the engine. Since the water at the top of the piston has a high heat capacity in comparison to air or steel and is present in considerable amounts, it can act as a reservoir, meaning that it will form a thermal equilibrium with its surroundings rather slowly. In comparison however, the air at the bottom of the engine, which is used to calculate the heat added or removed during the experiment, has a lower heat capacity as well as a lower mass than the water, it will much more quickly gain or lose heat. This can be seen in Table \ref{tb_manual_heat}, where, despite a bigger change in temperature, the calculated heat values are two orders of magnitude lower than those at the top of the engine.
     \item While attention was paid towards keeping a constant frequency while spinning the flywheel, as well as running the experiment for precisely one minute, it is still to be expected that the exact values will deviate between the two experiments. While important to keep in mind, these deviations are assumed to be much less significant than the two previously mentioned sources for inaccuracies.
 \end{enumerate}
 
 \newpage
 \subsection{Efficiency of the Stirling Engine}
-Table \ref{tb_efficiency_values}, shows a heat transfer efficiency \(\eta_H\) of about 10-15~\% of the heat which is produced through the combustion of ethanol being used by the engine and converted into work. The mechanical efficiency \(\eta_m\) in turn shows that between 32~\% and 65~\% of the work produced by the working gas is transferred to the flywheel. Finally, the overall efficiency values \(\eta\) show that only between 0.037~\% and 0.083~\% of the produced heat are transferred into usable work.
+Table \ref{tb_efficiency_values}, shows a heat transfer efficiency \(\eta_H\) of about 10-15~\%. This states the portion of heat from the combustion of ethanol which is used by the engine and converted into work. The mechanical efficiency \(\eta_m\) in turn shows that between 32~\% and 65~\% of the work produced by the working gas is transferred to the flywheel. Finally, the overall efficiency values \(\eta\) show that only between 0.037~\% and 0.083~\% of the produced heat are transferred into usable work.
 
 While \(\eta_H\) does not show a clear trend with temperature\footnote{In fact, the value at 230~°C is higher than that at the other two temperatures. Since \(\eta_H\) is a measure of how much heat is lost to the surroundings between the flame and the engine body, it is assumed that its value does not or only slightly change with temperature, meaning that the observed variation could have arisen out of other measurement or calculation uncertainties.}
 , \(\eta_m\) and especially \(\eta\) show increased values with a higher starting temperature, which matches with expectations, since the theoretical efficiency \(\eta_{Carnot}\) also increases with a higher temperature of the hot reservoir.
@@ -467,7 +467,7 @@ Just like with the prevous experiment, several possible sources of uncertainty w
 \begin{enumerate}
     \item Since the heat source was unable to supply enough heat to keep the engine at a constant temperature, and the measurements for constant engine motion could only be taken after exporting those for the start of an experiment from the oscilloscope to the USB-drive, with time, less heat was available to the engine at its bottom end. Additionally, since the water at its top was only cooled by the surrounding air, it heated up over time, meaning less heat could be transferred from the working gas to the cold reservoir, further lowering the engine's efficiency. As such, values calculated from data recorded at the end of the respective runs will tend towards similar values (this is especially apparent for \(Q_1\) but also for \(W_{pV}\)).
     \item In order to counteract the previously stated issues, measurements for constant engine motion were taken as soon as possible after exporting the starting values. Thus, the time between start and constant value measurements almost certianly differed between experiments.
-    \item Since there was no barometer available at the time of experiment, the ambient pressure used in Equation \ref{eq_pressure_from_volt} was arbitrarily chosen as 1 bar.
+    \item Since there was no barometer available at the time of experiment, the ambient pressure used in Equation \ref{eq_pressure_from_volt} was arbitrarily chosen as 1 atm (1.013 bar).
 \end{enumerate}
 
 \end{document}
